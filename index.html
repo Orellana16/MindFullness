@@ -16,8 +16,11 @@
                 <img src="Logo.jpeg" alt="MindFullness Yoga Nocturno Logo" style="height: 50px; width: auto; vertical-align: middle;">
             </div>
 
+            <button class="menu-toggle" aria-expanded="false" aria-controls="menu">
+                &#9776; </button>
+
             <nav>
-                <ul>
+                <ul id="menu">
                     <li><a href="#inicio">INICIO</a></li>
                     <li><a href="#nosotras">SOBRE NOSOTRAS</a></li>
                     <li><a href="#clases">CLASES & HORARIOS</a></li>
@@ -148,6 +151,32 @@
             <p style="margin-top: 30px;">&copy; 2024 MindFullness | Creado con ❤️ en Córdoba.</p>
         </div>
     </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.querySelector('.menu-toggle');
+            const navMenu = document.getElementById('menu');
+
+            toggleButton.addEventListener('click', () => {
+                // Alterna la clase 'active' en el menú (para mostrar/ocultar)
+                navMenu.classList.toggle('active');
+                
+                // Accesibilidad: actualiza el estado 'aria-expanded'
+                const isExpanded = navMenu.classList.contains('active');
+                toggleButton.setAttribute('aria-expanded', isExpanded);
+            });
+            
+            // Opcional: Cierra el menú cuando se hace clic en un enlace
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) { // Solo si estamos en móvil/tablet
+                        navMenu.classList.remove('active');
+                        toggleButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>

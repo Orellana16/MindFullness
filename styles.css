@@ -45,21 +45,33 @@ a:hover {
     color: #FFFFFF;
 }
 
-/* Encabezado y Navegación */
+/* Encabezado y Navegación (Desktop) */
 header {
     background-color: var(--color-principal);
     padding: 15px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    position: sticky; /* Opcional: para que el menú se quede fijo */
+    position: sticky;
     top: 0;
     z-index: 1000;
+}
+
+header .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    vertical-align: middle;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
+    display: flex; /* Flex para alinear los ítems en escritorio */
     justify-content: center;
 }
 
@@ -73,6 +85,7 @@ nav ul li a {
     padding: 5px 10px;
     border-radius: 5px;
     text-transform: uppercase;
+    display: block; /* Asegura que el área del link sea el bloque completo */
 }
 
 nav ul li a:hover {
@@ -143,15 +156,15 @@ section {
     background-color: var(--color-principal);
     padding: 20px;
     border-radius: 10px;
-    width: 200px;
+    width: 200px; /* Ancho fijo para desktop */
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s;
 }
 
 .miembro:hover {
-    transform: translateY(-5px); /* Efecto sutil al pasar el ratón */
-    background-color: #2938A6; /* Un poco más claro al pasar el ratón */
+    transform: translateY(-5px);
+    background-color: #2938A6;
 }
 
 .miembro h4 {
@@ -178,7 +191,7 @@ section {
 .clase-tarjeta h3 {
     margin-top: 0;
     color: var(--color-acento);
-    text-align: left; /* Títulos de tarjeta a la izquierda, general centrado */
+    text-align: left;
 }
 
 #precios .clase-tarjeta h3 {
@@ -214,21 +227,156 @@ footer {
     transform: scale(1.2);
 }
 
-/* Media Queries para Responsive (opcional pero recomendado) */
-@media (max-width: 768px) {
+/* ==================================== */
+/* MEDIA QUERIES               */
+/* ==================================== */
+
+/* 1. TABLETAS Y PANTALLAS PEQUEÑAS (máx. 1024px) */
+@media (max-width: 1024px) {
+    .contenedor {
+        padding: 15px; /* Menos padding lateral en tabletas */
+    }
+
+    /* Reducir el tamaño de las fuentes principales */
     #inicio h1 {
-        font-size: 2.5em;
+        font-size: 3em;
+    }
+    #inicio h2 {
+        font-size: 1.5em;
+    }
+}
+
+
+/* 2. MÓVILES (máx. 768px) */
+@media (max-width: 768px) {
+    /* NAVEGACIÓN (Convertir a formato columna) */
+    header .contenedor {
+        flex-direction: column; /* Apila logo y nav */
+        text-align: center;
     }
 
     nav ul {
-        flex-direction: column;
+        flex-direction: column; /* Apila los ítems del menú verticalmente */
+        margin-top: 10px;
     }
 
     nav ul li {
-        margin: 5px 0;
+        margin: 5px 0; /* Espacio vertical entre links */
+        width: 100%;
     }
 
+    /* INICIO */
+    #inicio {
+        padding: 50px 10px;
+    }
+    #inicio h1 {
+        font-size: 2em; /* Título más pequeño en móvil */
+    }
+    .eslogan {
+        font-size: 1em;
+    }
+
+    /* SOBRE NOSOTRAS */
     .miembro {
         width: 100%; /* Las tarjetas de las chicas ocupan todo el ancho en móviles */
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .equipo {
+        justify-content: center;
+    }
+
+    /* CLASES Y PRECIOS (Grid) */
+    .clases-grid {
+        /* Se adapta automáticamente gracias a 'auto-fit' en el CSS base, 
+           pero nos aseguramos de que el padding de la tarjeta sea cómodo */
+        gap: 15px;
+    }
+    .clase-tarjeta {
+        padding: 15px;
+    }
+
+    /* PIE DE PÁGINA */
+    .contacto-info p {
+        font-size: 0.9em;
+    }
+}
+
+/* Estilos para el BOTÓN HAMBURGUESA (Oculto por defecto en desktop) */
+.menu-toggle {
+    display: none; /* Oculto por defecto */
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: var(--color-acento);
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+/* ==================================== */
+/* MEDIA QUERIES (MÓVIL/TABLET)         */
+/* ==================================== */
+
+/* 1. MÓVILES Y TABLETAS (máx. 768px) */
+@media (max-width: 768px) {
+    /* NAVEGACIÓN (Configuración del menú hamburguesa) */
+    
+    /* Mostrar el botón hamburguesa */
+    .menu-toggle {
+        display: block; 
+        z-index: 1001; /* Asegura que esté por encima de la navegación colapsada */
+    }
+
+    /* OCULTAR EL MENÚ POR DEFECTO EN MÓVIL/TABLET */
+    nav ul {
+        display: none; /* Oculta el menú por defecto */
+        
+        flex-direction: column; 
+        position: absolute;
+        top: 80px; /* Debajo de la cabecera */
+        left: 0;
+        width: 100%;
+        background-color: var(--color-principal); /* Color de fondo del menú desplegado */
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        padding: 10px 0;
+    }
+
+    /* MOSTRAR EL MENÚ cuando JavaScript añade la clase 'active' */
+    nav ul.active {
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+
+    nav ul li a {
+        padding: 15px 20px;
+        text-align: left;
+        width: 100%;
+    }
+    
+    /* Resto de adaptaciones para móvil */
+    header .contenedor {
+        flex-direction: row; /* Mantenemos logo y botón de menú en la misma línea */
+        justify-content: space-between;
+    }
+    /* ... (El resto de estilos de Media Query (inicio, miembro, etc.) sigue igual) ... */
+    
+    #inicio h1 {
+        font-size: 2em; 
+    }
+    .eslogan {
+        font-size: 1em;
+    }
+    .miembro {
+        width: 100%; 
+        max-width: 300px;
+        margin: 0 auto;
     }
 }
